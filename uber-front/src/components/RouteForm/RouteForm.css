@@ -1,0 +1,26 @@
+ .RouteForm {
+     display: flex; 
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+ }
+
+.RouteForm__Input {
+    background-color: inherit;
+    border: 0;
+    color: white;
+    width: 150px;
+}
+
+.RouteForm__Input:focus {
+    border: 0;
+    outline: inherit;
+}
+
+.RouteForm__InputContainer {
+    border: 1px solid white;
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 30px
+}

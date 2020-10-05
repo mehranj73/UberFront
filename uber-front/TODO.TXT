@@ -1,0 +1,12 @@
+TODO LIST : 
+
+
+1 ) Map and direction based on form 
+
+    a ) find lib  <- DONE
+    b ) learn lib basics  <- TODO 
+    c ) integrate form  <- TODO 
+            -> Bootstrap layout
+    d ) use google api ( I guess ? )  <- TODO 
+    d ) pointers  <- TODO 
+    e ) DRAW PATH !!!!! <- TODO 

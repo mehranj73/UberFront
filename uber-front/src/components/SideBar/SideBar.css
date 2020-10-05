@@ -1,0 +1,8 @@
+.SideBar {
+    background-color: black;
+    color: white;
+}
+
+.SideBar__logo {
+    margin-bottom: 50px;
+}
