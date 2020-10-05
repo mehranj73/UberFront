@@ -16,6 +16,8 @@ export default function DevicePositionProvider(props){
         formatted_address: ""
     })
 
+    const [hasFetchedPosition, setHasFetchedPosition] = useState(false)
+
     const getCurrentDevicePosition = () => {
         return new Promise((resolve, reject) => {
             let long, lat;
@@ -36,6 +38,7 @@ export default function DevicePositionProvider(props){
                 lat: lat,
                 formatted_address: response.data.results[0].formatted_address
             })
+            setHasFetchedPosition(true);
         })
         .catch((error) => {
             console.log(error)
@@ -45,7 +48,7 @@ export default function DevicePositionProvider(props){
 
     return(
         <DevicePositionContext.Provider
-            value={{currentDevicePositionInformation, getCurrentDevicePositionInformation}}
+            value={{currentDevicePositionInformation, getCurrentDevicePositionInformation, hasFetchedPosition}}
         >
             {props.children}
         </DevicePositionContext.Provider>

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import {ACCESS_TOKEN} from '../cst';
 
-//Css
 import './MainMap.css';
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { DevicePositionContext } from '../../contexts/DevicePositionContext';
+import {MapObjectContext} from '../../contexts/MapObjectContext';
 
 
 
@@ -14,13 +15,28 @@ const Map = ReactMapboxGl({
   
 export default function MainMap(props){
 
-    const [centerCoord, setCenterCoord] = useState([0,0])
+    const {pickupMarker, dropoffMarker} = useContext(MapObjectContext); 
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            setCenterCoord([position.coords.latitude, position.coords.longitude]);
-        });    
-    })  
+    const generateMarkers = () => {
+        [pickupMarker, dropoffMarker].map((markerInfos) => {
+            console.log(markerInfos)
+            if(markerInfos.coords && markerInfos.data){
+                return(
+                    <Marker 
+                    coordinates={markerInfos.coords}
+                    offsetLeft={-20}
+                    offsetTop={40}
+                    >
+                        <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
+                    </Marker>
+                )
+            }
+        })
+    }
+
+    console.log(pickupMarker)
+
+
     return(
         <>
                 <Map
@@ -32,13 +48,16 @@ export default function MainMap(props){
                     <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
                         <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
                     </Layer>
-                    <Marker 
-                        coordinates={[-0.481747846041145, 51.3233379650232]}
+                    {pickupMarker.coords && (
+                        //COORDINATES : [lat, long]
+                        <Marker 
+                        coordinates={pickupMarker.coords}
                         offsetLeft={-20}
                         offsetTop={40}
-                    >
-                        <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
-                    </Marker>
+                        >
+                            <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
+                        </Marker>
+                    )}
                 </Map>
         </>
     )

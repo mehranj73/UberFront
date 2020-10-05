@@ -5,12 +5,14 @@ import RiderRequest from './RideRequest/RideRequest';
 
 export default function NuberApp(props){
 
-    const {getCurrentDevicePositionInformation} = useContext(DevicePositionContext)
+
+    const value = "a";
+    const {getCurrentDevicePositionInformation, hasFetchedPosition} = useContext(DevicePositionContext)
 
     useEffect(() => {
         const fetchPosition = async () => await getCurrentDevicePositionInformation()
         fetchPosition();
-    })
+    }, [hasFetchedPosition])
 
     return(
         <>
