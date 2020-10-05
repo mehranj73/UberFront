@@ -18,7 +18,7 @@ export default function MainMap(props){
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function(position) {
-            setCenterCoord([position.coords.longitude, position.coords.latitude]);
+            setCenterCoord([position.coords.latitude, position.coords.longitude]);
         });    
     })  
     return(
@@ -37,7 +37,7 @@ export default function MainMap(props){
                         offsetLeft={-20}
                         offsetTop={40}
                     >
-                        <i class="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
+                        <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
                     </Marker>
                 </Map>
         </>

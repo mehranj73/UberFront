@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'; 
+import React, { useState, useContext, useEffect } from 'react'; 
+import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import MainMap from '../Map/MainMap';
 import SideBar from '../SideBar/SideBar';
 import './RiderRequest.css';
@@ -6,6 +7,11 @@ import './RiderRequest.css';
 
 export default function RiderRequest(props){
 
+    const {getCurrentAddress} = useContext(DevicePositionContext)
+
+    useEffect(() => {
+        getCurrentAddress()
+    })
 
     return(
         <div className="RiderRequest container-fluid ">

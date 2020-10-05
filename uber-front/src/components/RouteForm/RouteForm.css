@@ -10,6 +10,7 @@
     border: 0;
     color: white;
     width: 150px;
+    font-size: 14px;
 }
 
 .RouteForm__Input:focus {
@@ -18,9 +19,19 @@
 }
 
 .RouteForm__InputContainer {
-    border: 1px solid white;
+    border: 0.5px solid white;
     width: 200px;
     text-align: center;
     padding: 5px;
     border-radius: 30px
+}
+
+.input__icon {
+    font-size: 13px;
+    color: #787878;
+}
+
+.input__plusIcon {
+    font-size: 14px;
+    color: #209b4b;
 }
