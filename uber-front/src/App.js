@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import RiderRequest from './components/RideRequest/RideRequest';
+import NuberApp from './components/NuberApp';
 import DevicePositionProvider from './contexts/DevicePositionContext';
 
 
-
 function App() {
+
   return (
     <div className="App">
       <DevicePositionProvider>
-        <RiderRequest />
+        <NuberApp />
       </DevicePositionProvider>
     </div>
   );

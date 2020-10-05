@@ -1,13 +1,19 @@
-import React, { useState } from 'react'; 
+import React, { useState, useContext, useEffect } from 'react'; 
 import './RouteForm.css';
 import { motion } from "framer-motion"
+import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 
 
 
 export default function RouteForm(props){
 
+    const {currentDevicePositionInformation} = useContext(DevicePositionContext);
     const [pickupAddress, setPickupAddress] = useState("")
     const [dropoffAddress, setDropoffAddress] = useState("")
+
+    useEffect(() => {
+        setPickupAddress(currentDevicePositionInformation.formatted_address)
+    }, [currentDevicePositionInformation])
 
     const handleChange = (e) => {
         if(e.target.name === "pickupAddress"){

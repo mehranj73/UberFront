@@ -10,35 +10,42 @@ const API_KEY = "AIzaSyAcFe2ncL_THzwJ6mho4TwU0865Y32Yihs";
 export default function DevicePositionProvider(props){
 
     //COORDS
-    const [currentDevicePosition, setCurrentDevicePosition] = useState({longitude: null, latitude: null})
-    //ADDRESS
-    const [currentDeviceAddress, setCurrentDeviceAddress] = useState("");
+    const [currentDevicePositionInformation, setCurrentDevicePositionInformation] = useState({
+        long: null, 
+        lat: null, 
+        formatted_address: ""
+    })
 
-    //TO CALL WHEN THE APP STARTS
-    const getCurrentPosition = () => {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            setCurrentDevicePosition({
-                "longitude" : position.coords.longitude, 
-                "latitude" : position.coords.latitude
-            })
-        });
+    const getCurrentDevicePosition = () => {
+        return new Promise((resolve, reject) => {
+            let long, lat;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                resolve([position.coords.longitude, position.coords.latitude])    
+            });
+        })
     }
 
-    const getCurrentAddress = async() => {
-        getCurrentPosition();
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentDevicePosition.longitude},${currentDevicePosition.latitude}&key=${API_KEY}`
-        await axios.get(url)
+    const getCurrentDevicePositionInformation = async() => {
+        const [long, lat] = await getCurrentDevicePosition().then(res => [...res]);
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${API_KEY}`
+        axios.get(url)
         .then((response) => {
-            console.log(response)
+            //updating currentDevicePosition
+            setCurrentDevicePositionInformation({
+                long: long, 
+                lat: lat,
+                formatted_address: response.data.results[0].formatted_address
+            })
         })
         .catch((error) => {
             console.log(error)
+            alert("wrong api call address")
         })
     }
 
     return(
         <DevicePositionContext.Provider
-            value={{currentDeviceAddress, getCurrentAddress, currentDevicePosition, getCurrentAddress}}
+            value={{currentDevicePositionInformation, getCurrentDevicePositionInformation}}
         >
             {props.children}
         </DevicePositionContext.Provider>

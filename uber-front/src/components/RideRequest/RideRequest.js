@@ -6,13 +6,7 @@ import './RiderRequest.css';
 
 
 export default function RiderRequest(props){
-
-    const {getCurrentAddress} = useContext(DevicePositionContext)
-
-    useEffect(() => {
-        getCurrentAddress()
-    })
-
+    
     return(
         <div className="RiderRequest container-fluid ">
             <div className="row">
