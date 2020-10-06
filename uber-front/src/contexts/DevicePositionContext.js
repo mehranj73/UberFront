@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const DevicePositionContext = createContext();
 
-const API_KEY = "AIzaSyAcFe2ncL_THzwJ6mho4TwU0865Y32Yihs";
+export const API_KEY = "AIzaSyAcFe2ncL_THzwJ6mho4TwU0865Y32Yihs";
 
 
 export default function DevicePositionProvider(props){

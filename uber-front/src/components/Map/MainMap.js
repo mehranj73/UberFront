@@ -17,26 +17,6 @@ export default function MainMap(props){
 
     const {pickupMarker, dropoffMarker} = useContext(MapObjectContext); 
 
-    const generateMarkers = () => {
-        [pickupMarker, dropoffMarker].map((markerInfos) => {
-            console.log(markerInfos)
-            if(markerInfos.coords && markerInfos.data){
-                return(
-                    <Marker 
-                    coordinates={markerInfos.coords}
-                    offsetLeft={-20}
-                    offsetTop={40}
-                    >
-                        <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
-                    </Marker>
-                )
-            }
-        })
-    }
-
-    console.log(pickupMarker)
-
-
     return(
         <>
                 <Map
@@ -44,6 +24,7 @@ export default function MainMap(props){
                     containerStyle={{
                         height: '100vh'
                     }}
+                    zoom={[7]}
                 >
                     <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
                         <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
@@ -55,7 +36,17 @@ export default function MainMap(props){
                         offsetLeft={-20}
                         offsetTop={40}
                         >
-                            <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "pink"}}></i>
+                            <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "#209b4b"}}></i>
+                        </Marker>
+                    )}
+                    {dropoffMarker.coords && (
+                        //COORDINATES : [lat, long]
+                        <Marker 
+                        coordinates={dropoffMarker.coords}
+                        offsetLeft={-20}
+                        offsetTop={40}
+                        >
+                            <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "#209b4b"}}></i>
                         </Marker>
                     )}
                 </Map>

@@ -8,13 +8,17 @@ export const MapObjectContext = createContext();
 export default function MapObjectProvider(props){
 
     const [pickupMarker, setPickUpMarker] = useState({
-        coords: [], 
-        data: {}
+        coords: null, 
+        data: {
+            formatted_address: ""
+        }
     }); 
 
     const [dropoffMarker, setDropOffMarker] = useState({
-        coords: [], 
-        data: {}
+        coords: null, 
+        data: {
+            formatted_address: ""
+        }
     });
 
     return(
