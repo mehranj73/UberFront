@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, GeoJSONLayer } from 'react-mapbox-gl';
 import {ACCESS_TOKEN} from '../cst';
 
 import './MainMap.css';
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
+import axios from 'axios';
 
 
 const Map = ReactMapboxGl({
@@ -15,7 +16,27 @@ const Map = ReactMapboxGl({
 export default function MainMap(props){
 
     const {pickupMarker, dropoffMarker, mapCenter} = useContext(MapObjectContext); 
+    const [route, setRoute] = useState(null);
 
+
+    useEffect(() => {
+        console.log(pickupMarker)
+        if(pickupMarker.coords && dropoffMarker.coords){
+            const startLong = pickupMarker.coords[0]; 
+            const startLat = pickupMarker.coords[1]; 
+            const endLong = dropoffMarker.coords[0]; 
+            const endLat = dropoffMarker.coords[1]; 
+            const url = `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${startLong},${startLat};${endLong},${endLat}?geometries=geojson&access_token=${ACCESS_TOKEN}`;
+            axios.get(url)
+            .then((response) => {
+                console.log(response)
+                setRoute(response.data.trips[0].geometry)
+            })
+            .catch((err) => {
+                console.log(err.response)
+            })
+        } 
+    }, [dropoffMarker])
     return(
         <>
                 <Map
@@ -49,6 +70,21 @@ export default function MainMap(props){
                         >
                             <i className="fas fa-home" style={{fontSize: 40, color: "#209b4b"}}></i>
                         </Marker>
+                    )}
+
+                    {route && (
+                        <GeoJSONLayer
+                            data={route}
+                            lineLayout={{
+                                "line-cap" : "round", 
+                                "line-join" : "miter"
+                            }}
+                            linePaint={{
+                                'line-color': '#4790E5',
+                                'line-width': 12
+                            }}                       
+                            data={route}
+                        />
                     )}
                 </Map>
         </>
