@@ -8,14 +8,13 @@ import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
 
 
-
 const Map = ReactMapboxGl({
     accessToken: ACCESS_TOKEN
   });
   
 export default function MainMap(props){
 
-    const {pickupMarker, dropoffMarker} = useContext(MapObjectContext); 
+    const {pickupMarker, dropoffMarker, mapCenter} = useContext(MapObjectContext); 
 
     return(
         <>
@@ -24,7 +23,9 @@ export default function MainMap(props){
                     containerStyle={{
                         height: '100vh'
                     }}
-                    zoom={[7]}
+                    zoom={[16]}
+                    movingMethod="flyTo"
+                    center={mapCenter}
                 >
                     <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
                         <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
@@ -46,7 +47,7 @@ export default function MainMap(props){
                         offsetLeft={-20}
                         offsetTop={40}
                         >
-                            <i className="fas fa-map-marker-alt" style={{fontSize: 40, color: "#209b4b"}}></i>
+                            <i className="fas fa-home" style={{fontSize: 40, color: "#209b4b"}}></i>
                         </Marker>
                     )}
                 </Map>

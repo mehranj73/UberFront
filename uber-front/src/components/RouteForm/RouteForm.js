@@ -9,20 +9,23 @@ import {API_KEY} from '../../contexts/DevicePositionContext';
 export default function RouteForm(props){
 
     const {currentDevicePositionInformation} = useContext(DevicePositionContext);
-    const {setPickUpMarker, setDropOffMarker} = useContext(MapObjectContext);
+    const {setPickUpMarker, setDropOffMarker, setMapCenter, dropoffMarker} = useContext(MapObjectContext);
     const [pickupAddress, setPickupAddress] = useState("")
     const [dropoffAddress, setDropoffAddress] = useState("")
 
     useEffect(() => {
         //Setting address in form 
-        setPickupAddress(currentDevicePositionInformation.formatted_address)
-        //WARNING : LONG, LAT because of REACT-MAPGL
-        setPickUpMarker({
-            coords: [currentDevicePositionInformation.long, currentDevicePositionInformation.lat], 
-            data: {
-                formatted_address : pickupAddress
-            }
-        })
+        if(currentDevicePositionInformation){
+            setPickupAddress(currentDevicePositionInformation.formatted_address)
+            //WARNING : LONG, LAT because of REACT-MAPGL
+            setPickUpMarker({
+                coords: [currentDevicePositionInformation.long, currentDevicePositionInformation.lat], 
+                data: {
+                    formatted_address : pickupAddress
+                }
+            })
+            setMapCenter([currentDevicePositionInformation.long, currentDevicePositionInformation.lat])    
+        }
     }, [currentDevicePositionInformation])
 
     const handleChange = (e) => {
@@ -59,6 +62,7 @@ export default function RouteForm(props){
                     formatted_address: formatted_address
                 }
             })
+            setMapCenter([coords.lng, coords.lat])
         })
         .catch((err) => {
             console.log(err)
