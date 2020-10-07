@@ -5,28 +5,30 @@ import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
 import Axios from 'axios';
 import {API_KEY} from '../../contexts/DevicePositionContext';
+import {setMarker} from '../../actions/mapActions';
+
 
 export default function RouteForm(props){
 
     const {currentDevicePositionInformation} = useContext(DevicePositionContext);
-    const {setPickUpMarker, setDropOffMarker, setMapCenter, dropoffMarker} = useContext(MapObjectContext);
+    const {dispatchMapObject} = useContext(MapObjectContext);
+    // const {setPickUpMarker, setDropOffMarker, setMapCenter, dropoffMarker} = useContext(MapObjectContext);
     const [pickupAddress, setPickupAddress] = useState("")
     const [dropoffAddress, setDropoffAddress] = useState("")
 
     useEffect(() => {
-        //Setting address in form 
-        if(currentDevicePositionInformation){
+        //setup address in form
+        if(currentDevicePositionInformation.long && currentDevicePositionInformation.lat && currentDevicePositionInformation.formatted_address){
+            console.log("WE RECEIVED POSITION ! ")
+            console.log(currentDevicePositionInformation)
+            //swap coords for Mapbox 
+            const coords = [currentDevicePositionInformation.long, currentDevicePositionInformation.lat];
+            const data = {formatted_address : currentDevicePositionInformation.formatted_address};
+            const markerPositionInfos = {coords, data}
+            setMarker(markerPositionInfos, "pickup")(dispatchMapObject);
             setPickupAddress(currentDevicePositionInformation.formatted_address)
-            //WARNING : LONG, LAT because of REACT-MAPGL
-            setPickUpMarker({
-                coords: [currentDevicePositionInformation.long, currentDevicePositionInformation.lat], 
-                data: {
-                    formatted_address : pickupAddress
-                }
-            })
-            setMapCenter([currentDevicePositionInformation.long, currentDevicePositionInformation.lat])    
         }
-    }, [currentDevicePositionInformation])
+    }, [currentDevicePositionInformation.formatted_address, currentDevicePositionInformation.long])
 
     const handleChange = (e) => {
         if(e.target.name === "pickupAddress"){
@@ -46,7 +48,7 @@ export default function RouteForm(props){
         return address
     }
     
-    //return coordinates and formatted address
+    // return coordinates and formatted address for the dropoff destination
     const getCoordinatesByAddress = async(address) => {
         
         const encodedAddress = urlEncode(dropoffAddress);
@@ -56,13 +58,11 @@ export default function RouteForm(props){
             console.log(response.data)
             const formatted_address = response.data.results[0].formatted_address
             const coords = response.data.results[0].geometry.location
-            setDropOffMarker({
-                coords: [coords.lng, coords.lat], 
-                data: {
-                    formatted_address: formatted_address
-                }
-            })
-            setMapCenter([coords.lng, coords.lat])
+            const markerPositionInfos = {coords: [coords.lng, coords.lat], data: {formatted_address: formatted_address}}
+            //set up marker
+            setMarker(markerPositionInfos, "dropoff")(dispatchMapObject);
+            setDropoffAddress(formatted_address)
+            //set up map center to the new marker
         })
         .catch((err) => {
             console.log(err)
@@ -71,14 +71,13 @@ export default function RouteForm(props){
 
     const handleFormSubmit = () => {
         if (pickupAddress && dropoffAddress){
-            //FIX IF PICK UP DIDNT CHANGE
-
             //convert address to coords and store in in the mapobject context
+            //New marker created
             getCoordinatesByAddress(dropoffAddress);
+
+        } else {
+            alert("Missing values")
         }
-        //Make sure it's not empty 
-        //send data to map context 
-        //alert (FOR NOW) !
     }
 
     return(

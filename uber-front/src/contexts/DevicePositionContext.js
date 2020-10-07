@@ -20,9 +20,10 @@ export default function DevicePositionProvider(props){
 
     const getCurrentDevicePosition = () => {
         return new Promise((resolve, reject) => {
-            let long, lat;
             navigator.geolocation.getCurrentPosition(function(position) {
-                resolve([position.coords.longitude, position.coords.latitude])    
+                if(position.coords.longitude !== null && position.coords.latitude !== null){
+                    resolve([position.coords.longitude, position.coords.latitude])    
+                }
             });
         })
     }

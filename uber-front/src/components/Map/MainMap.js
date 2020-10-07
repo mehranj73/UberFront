@@ -7,6 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
 import axios from 'axios';
+import { getRoute } from '../../actions/mapActions';
 
 
 const Map = ReactMapboxGl({
@@ -15,27 +16,18 @@ const Map = ReactMapboxGl({
   
 export default function MainMap(props){
 
-    const {pickupMarker, dropoffMarker, mapCenter} = useContext(MapObjectContext); 
-    const [route, setRoute] = useState(null);
-
+    const {mapObjectState, dispatchMapObject} = useContext(MapObjectContext);
+    //extracting from mapObjectState
+    const {pickupMarker, dropoffMarker, mapCenter, mapZoom, route} = mapObjectState
 
     useEffect(() => {
-        console.log(pickupMarker)
         if(pickupMarker.coords && dropoffMarker.coords){
-            const startLong = pickupMarker.coords[0]; 
-            const startLat = pickupMarker.coords[1]; 
-            const endLong = dropoffMarker.coords[0]; 
-            const endLat = dropoffMarker.coords[1]; 
-            const url = `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${startLong},${startLat};${endLong},${endLat}?geometries=geojson&access_token=${ACCESS_TOKEN}`;
-            axios.get(url)
-            .then((response) => {
-                console.log(response)
-                setRoute(response.data.trips[0].geometry)
-            })
-            .catch((err) => {
-                console.log(err.response)
-            })
-        } 
+            const fetchRoute = async() => {
+                await getRoute(pickupMarker.coords[0], pickupMarker.coords[1], dropoffMarker.coords[0], dropoffMarker.coords[1])(dispatchMapObject)
+            }
+            fetchRoute();
+            console.log(route)    
+        }
     }, [dropoffMarker])
     return(
         <>
@@ -44,13 +36,9 @@ export default function MainMap(props){
                     containerStyle={{
                         height: '100vh'
                     }}
-                    zoom={[16]}
                     movingMethod="flyTo"
-                    center={mapCenter}
+                    center={mapCenter ? mapCenter : [0.5375194, 50.8437787]}
                 >
-                    <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-                        <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-                    </Layer>
                     {pickupMarker.coords && (
                         //COORDINATES : [lat, long]
                         <Marker 
@@ -72,7 +60,7 @@ export default function MainMap(props){
                         </Marker>
                     )}
 
-                    {route && (
+                    {/* {route && (
                         <GeoJSONLayer
                             data={route}
                             lineLayout={{
@@ -85,7 +73,7 @@ export default function MainMap(props){
                             }}                       
                             data={route}
                         />
-                    )}
+                    )} */}
                 </Map>
         </>
     )

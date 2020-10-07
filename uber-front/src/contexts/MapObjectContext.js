@@ -1,29 +1,36 @@
-import React, { createContext, useState } from 'react'; 
+import React, { createContext, useState, useReducer } from 'react'; 
+import mapObjectReducer from '../reducers/mapObjectReducer';
 
 
 
 export const MapObjectContext = createContext(); 
 
+const initialState = {
+    pickupMarker : {
+        coords: null, 
+        data : null
+    }, 
+    dropoffMarker : {
+        coords: null, 
+        data: null
+    },
+    mapCenter : null, 
+    mapZoom : 5, 
+    isLoading: false, 
+    isLoadingRoute: false, 
+    route: null, 
+    error: null 
+}
+
 
 export default function MapObjectProvider(props){
 
-    const [mapCenter, setMapCenter] = useState([-0.2416815, 51.5285582]);
-    const [pickupMarker, setPickUpMarker] = useState({
-        coords: null, 
-        data: {
-            formatted_address: ""
-        }
-    }); 
+    //Reducer
+    const [mapObjectState, dispatchMapObject] = useReducer(mapObjectReducer, initialState); 
 
-    const [dropoffMarker, setDropOffMarker] = useState({
-        coords: null, 
-        data: {
-            formatted_address: ""
-        }
-    });
     return(
         <MapObjectContext.Provider
-            value={{pickupMarker, setPickUpMarker, dropoffMarker, setDropOffMarker, mapCenter, setMapCenter}}
+            value={{mapObjectState, dispatchMapObject}}
         >
             {props.children}
         </MapObjectContext.Provider>
