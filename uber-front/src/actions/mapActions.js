@@ -45,11 +45,10 @@ const addRouteFail = (error) => ({
 })
 
 export const getRoute = (startLng, startLat, endLng, endLat) => (dispatch) => {
-    dispatch(addRouteStart)
+    dispatch(addRouteStart())
     const url = `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${startLng},${startLat};${endLng},${endLat}?geometries=geojson&access_token=${ACCESS_TOKEN}`;
     axios.get(url)
     .then((response) => {
-        console.log(response.data.trips[0].geometry)
         dispatch(addRouteSuccess(response.data.trips[0].geometry))
     })
     .catch((err) => {

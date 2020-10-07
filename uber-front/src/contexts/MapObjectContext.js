@@ -1,8 +1,6 @@
 import React, { createContext, useState, useReducer } from 'react'; 
 import mapObjectReducer from '../reducers/mapObjectReducer';
 
-
-
 export const MapObjectContext = createContext(); 
 
 const initialState = {
@@ -17,7 +15,6 @@ const initialState = {
     mapCenter : null, 
     mapZoom : 5, 
     isLoading: false, 
-    isLoadingRoute: false, 
     route: null, 
     error: null 
 }

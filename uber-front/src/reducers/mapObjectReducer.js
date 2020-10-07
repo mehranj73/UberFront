@@ -19,7 +19,6 @@ import { FAIL_ADD_MARKER, FAIL_ADD_ROUTE, START_ADD_MAKRER, START_ADD_ROUTE, SUC
 
 export default function mapObjectReducer(state, action){
     console.log("TYPE", action.type)
-    console.log(state);
     switch(action.type){
         case START_ADD_MAKRER: 
             return {
@@ -58,10 +57,9 @@ export default function mapObjectReducer(state, action){
                 isLoading: true
             }
         case SUCCESS_ADD_ROUTE: 
-            console.log(action.payload)
             return {
                 ...state, 
-                isLoading: false, 
+                isLoading: true, 
                 route: action.payload
             }
         case FAIL_ADD_ROUTE: 

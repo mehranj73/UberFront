@@ -5,14 +5,16 @@ import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
 import Axios from 'axios';
 import {API_KEY} from '../../contexts/DevicePositionContext';
-import {setMarker} from '../../actions/mapActions';
+import {getRoute, setMarker} from '../../actions/mapActions';
 
 
 export default function RouteForm(props){
 
     const {currentDevicePositionInformation} = useContext(DevicePositionContext);
-    const {dispatchMapObject} = useContext(MapObjectContext);
-    // const {setPickUpMarker, setDropOffMarker, setMapCenter, dropoffMarker} = useContext(MapObjectContext);
+    const {mapObjectState ,dispatchMapObject} = useContext(MapObjectContext);
+    //extracting from mapObjectState 
+    const {pickupMarker, dropoffMarker} = mapObjectState;
+
     const [pickupAddress, setPickupAddress] = useState("")
     const [dropoffAddress, setDropoffAddress] = useState("")
 
@@ -61,7 +63,9 @@ export default function RouteForm(props){
             const markerPositionInfos = {coords: [coords.lng, coords.lat], data: {formatted_address: formatted_address}}
             //set up marker
             setMarker(markerPositionInfos, "dropoff")(dispatchMapObject);
-            setDropoffAddress(formatted_address)
+            //setDropoffAddress(formatted_address)
+            console.log("TRYING TO GET ROUTE ! ")
+            // getRoute(pickupMarker.coords[0], pickupMarker.coords[1], dropoffMarker.coords[0], dropoffMarker.coords[1])(dispatchMapObject)
             //set up map center to the new marker
         })
         .catch((err) => {
@@ -69,12 +73,11 @@ export default function RouteForm(props){
         })
     }
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = async() => {
         if (pickupAddress && dropoffAddress){
             //convert address to coords and store in in the mapobject context
             //New marker created
             getCoordinatesByAddress(dropoffAddress);
-
         } else {
             alert("Missing values")
         }
