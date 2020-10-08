@@ -4,15 +4,19 @@ import { FAIL_GET_USER, START_GET_USER, SUCCESS_GET_USER } from "../actions/type
 export default function authenticationReducer(state, action){
     console.log("Type") 
     console.log(action.type)
+    console.log("Payload")
+    console.log(action.payload)
     switch(action.type){
         case START_GET_USER: 
             return {
                 ...state, 
-                isLoading: true
+                isLoading: true, 
+                isAuhthenticated: false
             }
         case SUCCESS_GET_USER: 
             return {
                 ...state, 
+                isAuhthenticated: true,
                 isLoading: false, 
                 username: action.payload.username, 
                 first_name : action.payload.first_name, 
@@ -25,7 +29,8 @@ export default function authenticationReducer(state, action){
             return {
                 ...state, 
                 isLoading: false, 
-                error: action.payload
+                error: action.payload, 
+                isAuhthenticated: false
             }
         default: 
             return state;

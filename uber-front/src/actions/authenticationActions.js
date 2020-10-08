@@ -1,5 +1,6 @@
 import { SUCCESS_GET_USER, START_GET_USER, FAIL_GET_USER } from "./types"; 
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 
 const getUserStart = () => ({
@@ -25,13 +26,22 @@ export const userLogIn = (username, password) => (dispatch) => {
     const credentialObj = {username , password}
     axios.post(url, credentialObj)
     .then((response) => {
-        console.log(response)
+        //Decode token 
+        const tokenPayload = jwt_decode(response.data.access)
+        console.log(tokenPayload);
+        window.localStorage.setItem("access_token", JSON.stringify({
+            access : response.data.access, 
+            exp : 1602181918
+        }));
+        window.localStorage.setItem("refresh_token", JSON.stringify({
+            refresh : response.data.refresh
+        }));
+        dispatch(getUserSuccess(tokenPayload));
     })
-    .then((error) => {
+    .catch((error) => {
         console.log(error)
+        dispatch(getUserFail(error))
     })
-
-    console.log("wtf ? ")
 
     //api call 
     //catch error / response => disaptch back 

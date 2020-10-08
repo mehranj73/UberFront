@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react'; 
+import { Link } from 'react-router-dom';
 import { userLogIn } from '../../actions/authenticationActions';
 import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import './Login.css';
 
 export default function Login(props){
 
-    const {dispatchAuthentication} = useContext(AuthenticationContext);
+    const {authenticationState, dispatchAuthentication} = useContext(AuthenticationContext);
+    const {isLoading, isAuthenticated, error} = authenticationState;
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -36,30 +38,40 @@ export default function Login(props){
                     className="d-flex flex-column justify-content-center align-items-center Login__form"
                     onSubmit={handleSubmit}
                 >
-                    <input 
-                        className="authentication__Input mb-3"
-                        placeholder="username / email" 
-                        name="username"
-                        value={username}
-                        onChange={handleChange}
-                    />
+                {!isLoading ? (
+                    <>
+                        <input 
+                            className="authentication__Input mb-3"
+                            placeholder="username / email" 
+                            name="username"
+                            value={username}
+                            onChange={handleChange}
+                        />
 
-                    <input 
-                        className="authentication__Input mb-3"
-                        placeholder="password" 
-                        name="password"
-                        value={password}
-                        type="password"
-                        onChange={handleChange}
-                    />
+                        <input 
+                            className="authentication__Input mb-3"
+                            placeholder="password" 
+                            name="password"
+                            value={password}
+                            type="password"
+                            onChange={handleChange}
+                        />
 
-                    <button
-                        className="authentication__Button mb-3"
-                        type="submit"
-                    >
-                        Log in 
-                    </button>
+                        <button
+                            className="authentication__Button mb-3"
+                            type="submit"
+                        >
+                            Log in 
+                        </button>
+                        <div style={{color: "white"}}>You don't have an account ? <Link to="/register">Register now</Link></div>
+                    </>
+                ) : (
+                    <div class="spinner-border text-light" style={{fontSize: "40px"}}role="status">
+                        <span class="sr-only" style={{color: "white"}}>Loading...</span>
+                    </div>
+                )}
                 </form>
+
             </div>
         </div>
     )

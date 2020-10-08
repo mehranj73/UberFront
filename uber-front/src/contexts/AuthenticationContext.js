@@ -3,6 +3,7 @@ import authenticationReducer from '../reducers/authenticationReducer';
 
 
 const initialState = {
+    isAuhthenticated: false,
     username : null, 
     first_name : null, 
     last_name : null, 

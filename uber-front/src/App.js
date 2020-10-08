@@ -6,6 +6,7 @@ import MapObjectProvider from './contexts/MapObjectContext';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from './components/Authentication/Login';
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
+import Register from './components/Authentication/Register';
 
 
 function App() {
@@ -17,12 +18,15 @@ function App() {
           <DevicePositionProvider>
             <MapObjectProvider>
               <Switch>
-                <Route path="/">
-                  <Login />
+                <Route exact path="/register">
+                  <Register />
                 </Route>
-                <Route path="/rider-dashboard">
+                <Route exact path="/rider-dashboard">
                   <NuberApp />
-                </Route>              
+                </Route>   
+                <Route path="">
+                  <Login />
+                </Route>           
               </Switch>
             </MapObjectProvider>
           </DevicePositionProvider>
