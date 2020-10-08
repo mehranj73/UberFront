@@ -1,12 +1,9 @@
 import React, {useEffect, useContext} from 'react';
 import { DevicePositionContext } from '../contexts/DevicePositionContext';
 import RiderRequest from './RideRequest/RideRequest';
-
-
 export default function NuberApp(props){
 
 
-    const value = "a";
     const {getCurrentDevicePositionInformation, hasFetchedPosition} = useContext(DevicePositionContext)
 
     useEffect(() => {
@@ -16,6 +13,7 @@ export default function NuberApp(props){
 
     return(
         <>
+    
             <RiderRequest />
         </>
     )

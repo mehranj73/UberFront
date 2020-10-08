@@ -1,0 +1,43 @@
+.AuthenticationLayout {
+    height: 100vh;
+    background-color: #000;
+    padding: 3em 0;
+}
+
+.Login__header {
+    width: 100%; 
+    background-color: #fff;
+}
+
+.Authentication__back {
+    color: black; 
+    font-size: 32px;
+}
+
+.Login__form {
+    height: 100%;
+}
+
+.authentication__Input {
+    border-radius: 30px;
+    border: none; 
+    padding: 10px 20px;
+    width: 290px;
+    color: #555555;
+}
+
+.authentication__Input:focus {
+    outline: none;
+}
+
+
+.authentication__Button {
+    border-radius: 30px;
+    border: none; 
+    padding: 10px 20px;
+    width: 290px;
+    color: white; 
+    background-color: #3277b3;
+    font-weight: 600;
+    letter-spacing: 1px;
+}

@@ -5,3 +5,11 @@ export const SUCCESS_ADD_DROPOFF_MARKER = "SUCCESS_ADD_DROPOFF_MARKER";
 export const START_ADD_ROUTE = "START_ADD_ROUTE"; 
 export const FAIL_ADD_ROUTE = "FAIL_ADD_ROUTE";
 export const SUCCESS_ADD_ROUTE = "SUCCESS_ADD_ROUTE";
+
+
+
+//Auth 
+
+export const START_GET_USER = "START_GET_USER"; 
+export const FAIL_GET_USER ="FAIL_GET_USER"; 
+export const SUCCESS_GET_USER = "SUCCESS_GET_USER";
