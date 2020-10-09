@@ -59,7 +59,7 @@ export default function mapObjectReducer(state, action){
         case SUCCESS_ADD_ROUTE: 
             return {
                 ...state, 
-                isLoading: true, 
+                isLoading: false, 
                 route: action.payload
             }
         case FAIL_ADD_ROUTE: 

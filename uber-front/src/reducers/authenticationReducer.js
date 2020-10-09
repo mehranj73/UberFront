@@ -11,26 +11,26 @@ export default function authenticationReducer(state, action){
             return {
                 ...state, 
                 isLoading: true, 
-                isAuhthenticated: false
+                isAuthenticated: false
             }
         case SUCCESS_GET_USER: 
             return {
                 ...state, 
-                isAuhthenticated: true,
+                isAuthenticated: true,
                 isLoading: false, 
                 username: action.payload.username, 
                 first_name : action.payload.first_name, 
                 last_name : action.payload.last_name, 
                 user_id : action.payload.user_id, 
-                user_group : action.payload.group, 
-                erro: null
+                user_group : action.payload.user_group, 
+                error: null,    
             }
         case FAIL_GET_USER: 
             return {
                 ...state, 
                 isLoading: false, 
                 error: action.payload, 
-                isAuhthenticated: false
+                isAuthenticated: false
             }
         default: 
             return state;

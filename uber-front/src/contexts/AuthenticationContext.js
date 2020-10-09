@@ -15,7 +15,6 @@ const initialState = {
 
 export const AuthenticationContext = createContext(); 
 
-
 export const AuthenticationProvider = (props) => {
     
     const [authenticationState, dispatchAuthentication] = useReducer(authenticationReducer, initialState);

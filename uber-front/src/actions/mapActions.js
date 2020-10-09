@@ -49,6 +49,7 @@ export const getRoute = (startLng, startLat, endLng, endLat) => (dispatch) => {
     const url = `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${startLng},${startLat};${endLng},${endLat}?geometries=geojson&access_token=${ACCESS_TOKEN}`;
     axios.get(url)
     .then((response) => {
+        console.log(response.data)
         dispatch(addRouteSuccess(response.data.trips[0].geometry))
     })
     .catch((err) => {

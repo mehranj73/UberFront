@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'; 
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react'; 
+import { Link, useHistory } from 'react-router-dom';
 import { userLogIn } from '../../actions/authenticationActions';
 import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import './Login.css';
@@ -7,10 +7,20 @@ import './Login.css';
 export default function Login(props){
 
     const {authenticationState, dispatchAuthentication} = useContext(AuthenticationContext);
-    const {isLoading, isAuthenticated, error} = authenticationState;
+    const {isLoading, isAuthenticated, error, user_group} = authenticationState;
+
+    const history = useHistory();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if(isAuthenticated && user_group){
+            if(user_group === "rider"){
+                history.push("/rider-dashboard")
+            }
+        }
+    }, [isAuthenticated])
 
 
     const handleChange = (e) => {
@@ -71,7 +81,6 @@ export default function Login(props){
                     </div>
                 )}
                 </form>
-
             </div>
         </div>
     )

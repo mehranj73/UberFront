@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactMapboxGl, { Layer, Feature, Marker, GeoJSONLayer } from 'react-mapbox-gl';
 import {ACCESS_TOKEN} from '../cst';
-
 import './MainMap.css';
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { DevicePositionContext } from '../../contexts/DevicePositionContext';
 import {MapObjectContext} from '../../contexts/MapObjectContext';
 import axios from 'axios';
 import { getRoute } from '../../actions/mapActions';
+import MapModal from '../MapModal/MapModal';
 
 
 const Map = ReactMapboxGl({
@@ -21,21 +21,27 @@ export default function MainMap(props){
     const {pickupMarker, dropoffMarker, mapCenter, mapZoom, route, isLoading} = mapObjectState;
 
     useEffect(() => {
-        console.log("UPDATING !")
-        console.log(mapObjectState)
         if(dropoffMarker.coords){
             getRoute(pickupMarker.coords[0], pickupMarker.coords[1], dropoffMarker.coords[0], dropoffMarker.coords[1])(dispatchMapObject);
         }
     }, [dropoffMarker])
 
     return(
-        <>
+        <div 
+            className="MainMap__Container"
+            style={{
+                backgroundColor: "rgba(0,0,0,0.5)"
+            }}
+        >
+            {isLoading && <MapModal content="We are calculating your route"/>}
             <Map
                 style="mapbox://styles/valent1n/ckfuzl9jh3gin19qp5p5s83jl"
                 containerStyle={{
-                    height: '100vh'
+                    height: '100vh', 
+                    zIndex: isLoading ? -1 : 10
                 }}
                 movingMethod="flyTo"
+                className="MainMap"
                 center={mapCenter ? mapCenter : [0.5375194, 50.8437787]}
             >
                 {pickupMarker.coords && (
@@ -61,20 +67,19 @@ export default function MainMap(props){
 
                 {route && (
                     <GeoJSONLayer
-                        data={route}
                         lineLayout={{
                             "line-cap" : "round", 
                             "line-join" : "miter"
                         }}
                         linePaint={{
                             'line-color': '#4790E5',
-                            'line-width': 12
+                            'line-width': 6
                         }}                       
                         data={route}
                     />
                 )}
             </Map>
-        </>
+        </div>
     )
 }
 
