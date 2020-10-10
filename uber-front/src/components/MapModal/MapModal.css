@@ -3,4 +3,50 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) !important;
+    padding: 2em 4em;
+}
+
+.MapModal__Icon {
+    font-size: 50px;
+    color: #3277b3;
+}
+
+.MapModal__Button {
+    height: 50px;
+    width: 120px;
+    border-radius: 5px;
+    border-width: 4px;
+    border-style: solid;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.MapModal__container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.MapModal__title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.MapModal__infos__row {
+    justify-content: flex-start;
+    align-items: center;   
+}
+
+.MapModal__infos__title {
+    font-weight: 700;
+    font-size: 12px;
+    color: #7d7d7d;
+}
+
+.MapModal__infos__icon {
+    font-size: 18px;
 }

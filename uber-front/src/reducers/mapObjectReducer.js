@@ -60,13 +60,15 @@ export default function mapObjectReducer(state, action){
             return {
                 ...state, 
                 isLoading: false, 
-                route: action.payload
+                route: action.payload.route, 
+                tripDuration : action.payload.duration
             }
         case FAIL_ADD_ROUTE: 
             return {
                 ...state, 
                 isLoading: false, 
-                error: action.payload
+                error: action.payload, 
+                tripDuration: null
             }
         default: 
             return state 

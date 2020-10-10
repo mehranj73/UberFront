@@ -16,7 +16,8 @@ const initialState = {
     mapZoom : 5, 
     isLoading: false, 
     route: null, 
-    error: null 
+    error: null, 
+    tripDuration: null
 }
 
 

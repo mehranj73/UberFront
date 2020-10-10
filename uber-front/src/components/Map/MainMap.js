@@ -8,6 +8,7 @@ import {MapObjectContext} from '../../contexts/MapObjectContext';
 import axios from 'axios';
 import { getRoute } from '../../actions/mapActions';
 import MapModal from '../MapModal/MapModal';
+import { MapModalContext } from '../../contexts/MapModalContext';
 
 
 const Map = ReactMapboxGl({
@@ -17,6 +18,7 @@ const Map = ReactMapboxGl({
 export default function MainMap(props){
 
     const {mapObjectState, dispatchMapObject} = useContext(MapObjectContext);
+    const {setMapModalType, setOpenMapModal, openMapModal} = useContext(MapModalContext);
     //extracting from mapObjectState
     const {pickupMarker, dropoffMarker, mapCenter, mapZoom, route, isLoading} = mapObjectState;
 
@@ -26,6 +28,13 @@ export default function MainMap(props){
         }
     }, [dropoffMarker])
 
+    useEffect(() => {
+        if(route){
+            setMapModalType("route-loaded"); 
+            setOpenMapModal(true);
+        }
+    }, [route])
+
     return(
         <div 
             className="MainMap__Container"
@@ -33,12 +42,12 @@ export default function MainMap(props){
                 backgroundColor: "rgba(0,0,0,0.5)"
             }}
         >
-            {isLoading && <MapModal content="We are calculating your route"/>}
+            {openMapModal && <MapModal />}
             <Map
                 style="mapbox://styles/valent1n/ckfuzl9jh3gin19qp5p5s83jl"
                 containerStyle={{
                     height: '100vh', 
-                    zIndex: isLoading ? -1 : 10
+                    zIndex: openMapModal ? -1 : 10
                 }}
                 movingMethod="flyTo"
                 className="MainMap"

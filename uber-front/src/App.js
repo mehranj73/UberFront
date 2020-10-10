@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from './components/Authentication/Login';
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 import Register from './components/Authentication/Register';
+import MapModalProvider from './contexts/MapModalContext';
 
 
 function App() {
@@ -17,17 +18,19 @@ function App() {
         <AuthenticationProvider>
           <DevicePositionProvider>
             <MapObjectProvider>
-              <Switch>
-                <Route exact path="/register">
-                  <Register />
-                </Route>
-                <Route exact path="/rider-dashboard">
-                  <NuberApp />
-                </Route>   
-                <Route path="">
-                  <Login />
-                </Route>           
-              </Switch>
+              <MapModalProvider>
+                <Switch>
+                  <Route exact path="/register">
+                    <Register />
+                  </Route>
+                  <Route exact path="/rider-dashboard">
+                    <NuberApp />
+                  </Route>   
+                  <Route path="">
+                    <Login />
+                  </Route>           
+                </Switch>
+              </MapModalProvider>
             </MapObjectProvider>
           </DevicePositionProvider>
         </AuthenticationProvider>

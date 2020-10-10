@@ -50,7 +50,7 @@ export const getRoute = (startLng, startLat, endLng, endLat) => (dispatch) => {
     axios.get(url)
     .then((response) => {
         console.log(response.data)
-        dispatch(addRouteSuccess(response.data.trips[0].geometry))
+        dispatch(addRouteSuccess({route : response.data.trips[0].geometry, duration: response.data.trips[0].duration}))
     })
     .catch((err) => {
         dispatch(addRouteFail(err.response))
