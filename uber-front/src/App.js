@@ -8,6 +8,7 @@ import Login from './components/Authentication/Login';
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 import Register from './components/Authentication/Register';
 import MapModalProvider from './contexts/MapModalContext';
+import CurrentTripProvider from './contexts/CurrentTripContext';
 
 
 function App() {
@@ -17,21 +18,23 @@ function App() {
       <BrowserRouter>
         <AuthenticationProvider>
           <DevicePositionProvider>
-            <MapObjectProvider>
-              <MapModalProvider>
-                <Switch>
-                  <Route exact path="/register">
-                    <Register />
-                  </Route>
-                  <Route exact path="/rider-dashboard">
-                    <NuberApp />
-                  </Route>   
-                  <Route path="">
-                    <Login />
-                  </Route>           
-                </Switch>
-              </MapModalProvider>
-            </MapObjectProvider>
+            <CurrentTripProvider>
+              <MapObjectProvider>
+                <MapModalProvider>
+                  <Switch>
+                    <Route exact path="/register">
+                      <Register />
+                    </Route>
+                    <Route exact path="/rider-dashboard">
+                      <NuberApp />
+                    </Route>   
+                    <Route path="">
+                      <Login />
+                    </Route>           
+                  </Switch>
+                </MapModalProvider>
+              </MapObjectProvider>
+            </CurrentTripProvider>
           </DevicePositionProvider>
         </AuthenticationProvider>
       </BrowserRouter>
