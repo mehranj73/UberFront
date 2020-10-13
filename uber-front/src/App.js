@@ -8,6 +8,7 @@ import Login from './components/Authentication/Login';
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 import Register from './components/Authentication/Register';
 import MapModalProvider from './contexts/MapModalContext';
+import DriverCurrentTripProvider from './contexts/DriverCurrentTripContext';
 import CurrentTripProvider from './contexts/CurrentTripContext';
 import DriverDashbaord from './components/DriverDashboard/DriverDashboard';
 
@@ -30,7 +31,9 @@ function App() {
                       <NuberApp />
                     </Route>   
                     <Route exact path="/driver-dashboard">
-                      <DriverDashbaord />
+                      <DriverCurrentTripProvider>
+                        <DriverDashbaord />
+                      </DriverCurrentTripProvider>
                     </Route>
                     <Route exact path="/">
                       <Login />

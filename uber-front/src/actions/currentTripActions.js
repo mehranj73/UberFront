@@ -30,7 +30,6 @@ export const sendTripRequest = (pickupAddress, dropoffAddress) => (dispatch) => 
         dropoffAddress : dropoffAddress
     }
     const access_token = JSON.parse(window.localStorage.getItem("access_token")).access
-    console.log(access_token)
     const ws = webSocket(`ws://127.0.0.1:8000/trips/?${access_token}`); 
     ws.subscribe(
         msg => {

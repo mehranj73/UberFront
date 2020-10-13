@@ -18,7 +18,7 @@ export default function Login(props){
         if(isAuthenticated && user_group){
             if(user_group === "rider"){
                 history.push("/rider-dashboard")
-            } else if (user_group === "DRIVER"){
+            } else if (user_group === "driver"){
                 history.push("/driver-dashboard")
             }
         }

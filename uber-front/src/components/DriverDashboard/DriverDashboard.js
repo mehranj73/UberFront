@@ -1,15 +1,22 @@
-import React, {useEffect} from 'react'; 
-import { listenToChannel } from '../../actions/driverTripActions';
+import React, {useContext, useEffect} from 'react'; 
+import { listenToDriverChannel } from '../../actions/driverTripActions';
+import {DriverCurrentTripContext} from '../../contexts/DriverCurrentTripContext';
 
 
 
 
 export default function DriverDashbaord(props){
 
+    const {driverCurrentTripState, dispatchDriverCurrentTrip} = useContext(DriverCurrentTripContext);
+    //extract 
+    const triprRequested = driverCurrentTripState.isRequested 
 
     useEffect(() => {
-        listenToChannel();
-    })
+        listenToDriverChannel();
+        if(triprRequested){
+            alert("READY ! ")
+        }
+    }, [triprRequested])
 
     return(
         <div className="DriverDashboard">
