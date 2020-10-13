@@ -9,6 +9,7 @@ import { AuthenticationProvider } from './contexts/AuthenticationContext';
 import Register from './components/Authentication/Register';
 import MapModalProvider from './contexts/MapModalContext';
 import CurrentTripProvider from './contexts/CurrentTripContext';
+import DriverDashbaord from './components/DriverDashboard/DriverDashboard';
 
 
 function App() {
@@ -28,7 +29,10 @@ function App() {
                     <Route exact path="/rider-dashboard">
                       <NuberApp />
                     </Route>   
-                    <Route path="">
+                    <Route exact path="/driver-dashboard">
+                      <DriverDashbaord />
+                    </Route>
+                    <Route exact path="/">
                       <Login />
                     </Route>           
                   </Switch>
