@@ -9,6 +9,7 @@ import axios from 'axios';
 import { getRoute } from '../../actions/mapActions';
 import MapModal from '../MapModal/MapModal';
 import { MapModalContext } from '../../contexts/MapModalContext';
+import { CurrentTripContext } from '../../contexts/CurrentTripContext';
 
 
 const Map = ReactMapboxGl({
@@ -19,6 +20,8 @@ export default function MainMap(props){
 
     const {mapObjectState, dispatchMapObject} = useContext(MapObjectContext);
     const {setMapModalType, setOpenMapModal, openMapModal} = useContext(MapModalContext);
+    const {currentTripState, dispatchCurrentTrip} = useContext(CurrentTripContext);
+    const {isSubmitted} = currentTripState;
     //extracting from mapObjectState
     const {pickupMarker, dropoffMarker, mapCenter, mapZoom, route, isLoading} = mapObjectState;
 
@@ -34,6 +37,14 @@ export default function MainMap(props){
             setOpenMapModal(true);
         }
     }, [route])
+
+
+    useEffect(() => {
+        if(isSubmitted){
+            setMapModalType("isSubmitted"); 
+            setOpenMapModal(true);
+        }
+    }, [isSubmitted])
 
     return(
         <div 

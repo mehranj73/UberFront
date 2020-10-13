@@ -7,7 +7,6 @@ import { MapObjectContext } from '../../contexts/MapObjectContext';
 import { CurrentTripContext } from '../../contexts/CurrentTripContext';
 import { sendTripRequest } from '../../actions/currentTripActions';
 
-
 export default function MapModal(props){
 
     const {setOpenMapModal, setMapModalType, openMapModal, mapModalType} = useContext(MapModalContext);
@@ -29,8 +28,12 @@ export default function MapModal(props){
     }
 
     const submitTripRequest = () => {
-        console.log("inside")
         sendTripRequest(null, null)(dispatchCurrentTrip);
+    }
+
+    const handleClose = () => {
+        setOpenMapModal(false);
+        setMapModalType("");
     }
 
     useEffect(()=>{
@@ -114,7 +117,36 @@ export default function MapModal(props){
                 </div>
             </Frame>
         )
-    } else {
+    } else if(mapModalType === "isSubmitted"){
+        return(
+            <Frame
+                className="MapModal justify-content-center d-flex"
+                width={500}
+                height={340}
+                borderRadius={10}
+                initial={{opacity: 0}}
+                backgroundColor={"#FFF"}
+                transition={{ease: "linear"}}
+                animate={{opacity: 1}}
+            > 
+                <div className="MapModal__submited_trip d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-check-circle mb-3" style={{fontSize: '80px', color: "#209b4b"}}></i>
+                    <div className="MapModal__title mb-3">
+                        Someone is going to pick you up !   
+                    </div> 
+                    <div 
+                        className="MapModal__Button" 
+                        style={{backgroundColor: "#209b4b", color: "white", borderColor: "#209b4b"}}
+                        onClick={handleClose}
+                    >
+                        okay
+                    </div>
+                </div>
+            </Frame>            
+        )
+    }
+    
+    else {
         return(<></>)
     }
 }
