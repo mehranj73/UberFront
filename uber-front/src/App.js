@@ -8,9 +8,9 @@ import Login from './components/Authentication/Login';
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 import Register from './components/Authentication/Register';
 import MapModalProvider from './contexts/MapModalContext';
-import DriverCurrentTripProvider from './contexts/DriverCurrentTripContext';
 import CurrentTripProvider from './contexts/CurrentTripContext';
 import DriverDashbaord from './components/DriverDashboard/DriverDashboard';
+import TripsProvider from './contexts/TripsContext';
 
 
 function App() {
@@ -19,30 +19,30 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AuthenticationProvider>
-          <DevicePositionProvider>
-            <CurrentTripProvider>
-              <MapObjectProvider>
-                <MapModalProvider>
-                  <Switch>
-                    <Route exact path="/register">
-                      <Register />
-                    </Route>
-                    <Route exact path="/rider-dashboard">
-                      <NuberApp />
-                    </Route>   
-                    <Route exact path="/driver-dashboard">
-                      <DriverCurrentTripProvider>
-                        <DriverDashbaord />
-                      </DriverCurrentTripProvider>
-                    </Route>
-                    <Route exact path="/">
-                      <Login />
-                    </Route>           
-                  </Switch>
-                </MapModalProvider>
-              </MapObjectProvider>
-            </CurrentTripProvider>
-          </DevicePositionProvider>
+          <TripsProvider>
+            <DevicePositionProvider>
+              <CurrentTripProvider>
+                <MapObjectProvider>
+                  <MapModalProvider>
+                    <Switch>
+                      <Route exact path="/register">
+                        <Register />
+                      </Route>
+                      <Route exact path="/rider-dashboard">
+                        <NuberApp />
+                      </Route>   
+                      <Route exact path="/driver-dashboard">
+                          <DriverDashbaord />
+                      </Route>
+                      <Route exact path="/">
+                        <Login />
+                      </Route>           
+                    </Switch>
+                  </MapModalProvider>
+                </MapObjectProvider>
+              </CurrentTripProvider>
+            </DevicePositionProvider>
+          </TripsProvider>
         </AuthenticationProvider>
       </BrowserRouter>
     </div>

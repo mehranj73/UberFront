@@ -6,15 +6,17 @@ import { MapContext } from 'react-mapbox-gl';
 import { MapObjectContext } from '../../contexts/MapObjectContext';
 import { CurrentTripContext } from '../../contexts/CurrentTripContext';
 import { sendTripRequest } from '../../actions/currentTripActions';
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 
 export default function MapModal(props){
 
     const {setOpenMapModal, setMapModalType, openMapModal, mapModalType} = useContext(MapModalContext);
     const {mapObjectState} = useContext(MapObjectContext);
+    const {pickupMarker, dropoffMarker} = mapObjectState;
     const {currentTripState, dispatchCurrentTrip} = useContext(CurrentTripContext);
     const isLoadingTrip = currentTripState.isLoading;
-
-
+    const {authenticationState} = useContext(AuthenticationContext);
+    const {user_id} = authenticationState;
     //extract from mapobojectstate
     const tripDuration = mapObjectState.tripDuration
 
@@ -28,7 +30,9 @@ export default function MapModal(props){
     }
 
     const submitTripRequest = () => {
-        sendTripRequest(null, null)(dispatchCurrentTrip);
+        const pickupAddress = pickupMarker.data.formatted_address; 
+        const dropoffAddress = dropoffMarker.data.formatted_address;
+        sendTripRequest(user_id, pickupAddress, dropoffAddress)(dispatchCurrentTrip);
     }
 
     const handleClose = () => {

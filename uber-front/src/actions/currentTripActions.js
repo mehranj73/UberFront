@@ -20,11 +20,12 @@ const tripRequestSuccess = (tripData) => {
 
 
 
-export const sendTripRequest = (pickupAddress, dropoffAddress) => (dispatch) => {
+export const sendTripRequest = (userId, pickupAddress, dropoffAddress) => (dispatch) => {
     
     dispatch(tripRequestStart());
+    console.log(userId)
     const data = {
-        from_user : null, 
+        from_user : userId, 
         driver : null, 
         pickupAddress : pickupAddress, 
         dropoffAddress : dropoffAddress
