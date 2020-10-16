@@ -16,6 +16,9 @@ export default function NuberApp(props){
         fetchTrips();
     }, [hasFetchedPosition])
 
+    console.log("checking trips load")
+    console.log(tripsState.trips)
+
     return(
         <>
             <RiderRequest />

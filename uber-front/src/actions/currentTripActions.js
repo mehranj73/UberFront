@@ -18,8 +18,6 @@ const tripRequestSuccess = (tripData) => {
     }
 }
 
-
-
 export const sendTripRequest = (userId, pickupAddress, dropoffAddress) => (dispatch) => {
     
     dispatch(tripRequestStart());
@@ -27,28 +25,18 @@ export const sendTripRequest = (userId, pickupAddress, dropoffAddress) => (dispa
     const data = {
         from_user : userId, 
         driver : null, 
-        pickupAddress : pickupAddress, 
-        dropoffAddress : dropoffAddress
+        pickup_address : pickupAddress, 
+        dropoff_address : dropoffAddress
     }
     const access_token = JSON.parse(window.localStorage.getItem("access_token")).access
     const ws = webSocket(`ws://127.0.0.1:8000/trips/?${access_token}`); 
-    ws.subscribe(
-        msg => {
-            console.log("we received : " +JSON.stringify(msg))
-            const type = msg.type; 
-            console.log(type)
-            const data = msg.data
-            if(type === ("trip.success")){
-                console.log(data)
-                dispatch(tripRequestSuccess(data))
-            }  
-        },
-        err => {
-            console.log(err)
-            return dispatch(tripRequestFail(err))
-        },
-        () => console.log("complete")
-    ); 
+    ws.subscribe(msg => {
+        if(msg.type === "trip.fail"){
+            dispatch(tripRequestFail(msg.data))
+        } else if(msg.type === "trip.success"){
+            dispatch(tripRequestSuccess(msg.data))
+        }
+    });
     ws.next({
         type: "create.trip", 
         data: data 

@@ -4,8 +4,6 @@ import { FAIL_GET_USER, START_GET_USER, SUCCESS_GET_USER } from "../actions/type
 export default function authenticationReducer(state, action){
     console.log("Type") 
     console.log(action.type)
-    console.log("Payload")
-    console.log(action.payload)
     switch(action.type){
         case START_GET_USER: 
             return {

@@ -25,7 +25,7 @@ export const SUCCESS_TRIP_REQUEST = "SUCCESS_TRIP_REQUEST";
 export const START_GET_TRIPS = "START_GET_TRIPS"; 
 export const FAIL_GET_TRIPS = "FAIL_GET_TRIPS"; 
 export const SUCCESS_GET_TRIPS = "SUCCESS_GET_TRIPS";
-
+export const ADD_TRIP = "ADD_TRIP";
 
 
 

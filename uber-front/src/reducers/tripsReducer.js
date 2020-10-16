@@ -1,4 +1,4 @@
-import { FAIL_GET_TRIPS, START_GET_TRIPS, SUCCESS_GET_TRIPS } from "../actions/types";
+import { FAIL_GET_TRIPS, START_GET_TRIPS, SUCCESS_GET_TRIPS, ADD_TRIP } from "../actions/types";
 
 
 
@@ -16,6 +16,12 @@ export default function tripsReducer(state, action){
                 isLoading : false, 
                 trips : [], 
                 error : action.payload
+            }
+        case ADD_TRIP: 
+            return {
+                isLoading: false, 
+                trips : [...state.trips.filter(trip => trip.id !== action.payload.id), action.payload], 
+                error: null
             }
         case SUCCESS_GET_TRIPS: 
             return {
