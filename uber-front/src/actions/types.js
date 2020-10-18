@@ -6,8 +6,6 @@ export const START_ADD_ROUTE = "START_ADD_ROUTE";
 export const FAIL_ADD_ROUTE = "FAIL_ADD_ROUTE";
 export const SUCCESS_ADD_ROUTE = "SUCCESS_ADD_ROUTE";
 
-
-
 //Auth 
 
 export const START_GET_USER = "START_GET_USER"; 
@@ -28,4 +26,4 @@ export const SUCCESS_GET_TRIPS = "SUCCESS_GET_TRIPS";
 export const ADD_TRIP = "ADD_TRIP";
 
 
-
+//ACCEPT TRIPS 

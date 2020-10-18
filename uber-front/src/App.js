@@ -11,6 +11,7 @@ import MapModalProvider from './contexts/MapModalContext';
 import CurrentTripProvider from './contexts/CurrentTripContext';
 import DriverDashbaord from './components/DriverDashboard/DriverDashboard';
 import TripsProvider from './contexts/TripsContext';
+import DriverRequestModalProvider from './contexts/DriverRequestModalContext';
 
 
 function App() {
@@ -32,7 +33,9 @@ function App() {
                         <NuberApp />
                       </Route>   
                       <Route exact path="/driver-dashboard">
+                        <DriverRequestModalProvider>
                           <DriverDashbaord />
+                        </DriverRequestModalProvider>
                       </Route>
                       <Route exact path="/">
                         <Login />

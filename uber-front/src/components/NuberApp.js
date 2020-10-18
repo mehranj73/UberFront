@@ -14,17 +14,18 @@ export default function NuberApp(props){
 
 
     useEffect(() => {
-        // const access_token = JSON.parse(window.localStorage.getItem("access_token")).access
-        // const ws = webSocket(`ws://127.0.0.1:8000/trips/?${access_token}`);      
-        // console.log(ws)
-        // ws.subscribe(
-        //     msg => {
-        //         console.log("WE RECEIVED THIS !")
-        //         console.log(msg)
-        //         if(msg.data.id === currentTripState.tripId && msg.data.status === "ACCEPTED"){
-        //             alert("ACCEPT ! ")
-        //     }
-        // })  
+        const access_token = JSON.parse(window.localStorage.getItem("access_token")).access
+        const ws = webSocket(`ws://127.0.0.1:8000/trips/?${access_token}`);     
+        const subscription = ws.subscribe(
+            msg => {
+                alert("We received a message")
+                console.log(msg);
+            }
+        )
+        return () => subscription.unsubscribe();
+    }, [])
+
+    useEffect(() => {
         const fetchTrips = async () => await getTrips()(dispatchTrips);
         const fetchPosition = async () => await getCurrentDevicePositionInformation()
         fetchPosition();
@@ -32,12 +33,7 @@ export default function NuberApp(props){
 
     }, [])
 
-    console.log("checking trips load")
-    console.log(tripsState.trips)
-
     return(
-        <>
-            <RiderRequest />
-        </>
+        <RiderRequest />
     )
 }
