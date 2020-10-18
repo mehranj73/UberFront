@@ -21,7 +21,6 @@ export const addTrip = (new_trip) => ({
     payload: new_trip
 })
 
-
 export const getTrips = (userId) => (dispatch) => {
     dispatch(getTripsStart());
     const url = 'http://localhost:8000/api/v1/trips/'; 
